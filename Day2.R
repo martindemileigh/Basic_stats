@@ -179,7 +179,7 @@ ggplot(data = sa_long, aes( x = minutes)) +
 # Let's get rid of that one value...
 
 sa_clean <- sa_long %>% 
-  filter(minutes < 3000)
+  filter(minutes < 100)
 
 # A faceted histogram
 ggplot(data = sa_clean, aes(x = minutes)) +
@@ -242,45 +242,4 @@ ggplot(data = sa_time, aes(y = now_now, x = just_now)) +
   geom_point(aes(colour = geo)) +
   geom_smooth(aes(colour = geo), method = "lm") +
   coord_equal(xlim = c(0, 60), ylim = c(0, 60))
-
-
-
-
-
-
-
-
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
