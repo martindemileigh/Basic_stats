@@ -338,9 +338,9 @@ t.test(dat ~ sample, data = r_norm, var.equal = TRUE, alternative = "greater")
 
 # Visualisation
 ggplot(data = r_norm, aes(x = dat)) +
-  geom_density()
+  geom_density(aes(fill = sample))
 
-ggplot(data = r_norm, aes(x = dat, y = value, fill = sample)) +
+ggplot(data = r_norm, aes(x = dat, y = dat, fill = sample)) +
   geom_boxplot()
 
 
