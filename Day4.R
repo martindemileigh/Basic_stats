@@ -167,9 +167,3 @@ library(pgirmess)
 
 kruskalmc(weight ~ Diet, data = chicks_0_21)
 
-
-
-
-
-  
-
