@@ -8,8 +8,9 @@
 # Load libraries ----------------------------------------------------------
 
 library(tidyverse)
-library(Rmisc)
+# library(Rmisc) # Unfortunately this overrides many dplyr functions
 library(ggpubr)
+
 # Load Data ---------------------------------------------------------------
 
 snakes <- read_csv("snakes.csv")
@@ -139,7 +140,7 @@ moth.summary <- summarySE(data = moths, measurevar = "count",
                            groupvars = c("trap"))
 
 ggplot(data = moths, aes(x = trap, y = count)) +
-  geom_segment(moth.summary,
+  geom_segment(data = moth.summary,
                aes(x = trap, xend = trap, y = count - ci, 
                    yend = count + ci, colour = trap),
        size = 2.0, linetype = "solid", show.legend = F) +
@@ -157,7 +158,7 @@ plt3 <- ggplot(data = moths, aes(x = Location, y = count, fill = trap)) +
   geom_boxplot()
 
 
-ggarrange(plt1, plt2, plt3, nrow = 2, labels = "AUTO")
+ggarrange(plt1, plt2, plt3, nrow = 3, labels = "AUTO")
 
 
 # Regressions -------------------------------------------------------------
@@ -191,16 +192,16 @@ faithful_lm <- lm(eruptions ~ waiting, data = faithful)
 summary(faithful_lm)
  #To test the hypothesis (Intercept)
 
-slope <- round(eruption.lm$coef[2], 3)
+slope <- round(faithful_lm$coef[2], 3)
 
-r2 <- round(summary(eruption.lm)$r.squared, 3)
+r2 <- round(summary(faithful_lm)$r.squared, 3)
 
 ggplot(data = faithful, aes(x = waiting, y = eruptions)) +
   geom_point() +
   annotate("text", x = 45, y = 5, label = paste0("slope == ", 
                                                  slope, "~(min/min)"), parse = TRUE, hjust = 0) +
-  annotate("text", x = 45, y = 4.75, label = paste0("italic(p) < ", p.val)
-           , parse = TRUE, hjust = 0) +
+  #annotate("text", x = 45, y = 4.75, label = paste0("italic(p) < ", p.val)
+  #         , parse = TRUE, hjust = 0) +
   annotate("text", x = 45, y = 4.5, label = paste0("italic(r)^2 == ", r2), 
            parse = TRUE, hjust = 0) +
   stat_smooth(method = "lm", colour = "salmon") +
@@ -273,16 +274,4 @@ melted_ecklonia <- melt(ecklonia_pearson)
 
 ggplot(data = melted_ecklonia, aes(x = Var1, y = Var2)) +
   geom_tile(aes(fill = value), colour = "white")
-
-
-
-
-
-
-
-
-
-
-
-
 
